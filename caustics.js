@@ -11,7 +11,6 @@
     mouse.y = 1.0 - e.clientY / window.innerHeight;
   });
 
-  // Touch support
   document.addEventListener('touchmove', (e) => {
     const t = e.touches[0];
     mouse.x = t.clientX / window.innerWidth;
@@ -32,14 +31,12 @@
     uniform vec2 u_mouse;
     uniform float u_dark;
 
-    // Attempt a realistic caustics look via layered refraction simulation
-    // Uses multiple overlapping "wave" layers that create interference patterns
 
     float random(vec2 st) {
       return fract(sin(dot(st, vec2(12.9898, 78.233))) * 43758.5453123);
     }
 
-    // Attempt smooth noise
+    // smooth noise
     float noise(vec2 st) {
       vec2 i = floor(st);
       vec2 f = fract(st);
@@ -51,30 +48,31 @@
       return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
     }
 
-    // Water surface height — multiple wave octaves
-    float waterHeight(vec2 p, float t) {
+    // Water surface height
+    float waterHeight(vec2 p, float t, float aspect) {
       float h = 0.0;
-      // Large slow waves
+      // Large slow
       h += sin(p.x * 1.8 + t * 0.6) * cos(p.y * 1.4 + t * 0.5) * 0.5;
-      // Medium ripples
+      // Medium
       h += sin(p.x * 3.5 - t * 0.9 + p.y * 2.0) * 0.25;
       h += cos(p.y * 4.1 + t * 0.7 - p.x * 1.5) * 0.25;
-      // Small high-frequency detail
+      // Small high-frequency
       h += sin(p.x * 7.0 + t * 1.2) * cos(p.y * 6.0 - t * 1.0) * 0.12;
       h += noise(p * 3.0 + t * 0.3) * 0.3;
-      // Mouse influence — ripple emanating from cursor
-      float d = length(p - u_mouse * 8.0);
+      // Mouse influence
+      vec2 mousePos = u_mouse * 8.0;
+      mousePos.x *= aspect;
+      float d = length(p - mousePos);
       h += sin(d * 4.0 - t * 3.0) * exp(-d * 0.5) * 0.6;
       return h;
     }
 
-    // Compute normal via central differences to simulate refraction
-    vec3 waterNormal(vec2 p, float t) {
+    vec3 waterNormal(vec2 p, float t, float aspect) {
       float eps = 0.05;
-      float hL = waterHeight(p - vec2(eps, 0.0), t);
-      float hR = waterHeight(p + vec2(eps, 0.0), t);
-      float hD = waterHeight(p - vec2(0.0, eps), t);
-      float hU = waterHeight(p + vec2(0.0, eps), t);
+      float hL = waterHeight(p - vec2(eps, 0.0), t, aspect);
+      float hR = waterHeight(p + vec2(eps, 0.0), t, aspect);
+      float hD = waterHeight(p - vec2(0.0, eps), t, aspect);
+      float hU = waterHeight(p + vec2(0.0, eps), t, aspect);
       return normalize(vec3(hL - hR, hD - hU, eps * 4.0));
     }
 
@@ -86,48 +84,47 @@
 
       float t = u_time;
 
-      // Compute refracted position on "floor"
-      vec3 normal = waterNormal(p, t);
-      // Snell's law approximation — refract downward through water
-      float depth = 2.0; // distance from water surface to floor
+
+      vec3 normal = waterNormal(p, t, aspect);
+
+      float depth = 2.0;
       vec2 refracted = p + normal.xy * depth * 0.5;
 
-      // Caustic intensity: overlap of multiple refraction layers
+      // Caustic
       float caustic = 0.0;
 
-      // Layer 1
-      vec3 n1 = waterNormal(refracted * 1.0, t * 1.0);
+
+      vec3 n1 = waterNormal(refracted * 1.0, t * 1.0, aspect);
       caustic += pow(max(0.0, n1.z), 8.0);
 
       // Layer 2 — offset
-      vec3 n2 = waterNormal(refracted * 1.3 + 2.5, t * 0.8);
+      vec3 n2 = waterNormal(refracted * 1.3 + 2.5, t * 0.8, aspect);
       caustic += pow(max(0.0, n2.z), 8.0);
 
       // Layer 3
-      vec3 n3 = waterNormal(refracted * 0.7 + 5.0, t * 1.2);
+      vec3 n3 = waterNormal(refracted * 0.7 + 5.0, t * 1.2, aspect);
       caustic += pow(max(0.0, n3.z), 6.0);
 
       caustic /= 3.0;
 
-      // Enhance contrast — make the bright caustic lines pop
+
       caustic = pow(caustic, 1.8) * 1.6;
 
-      // Color tint — warm golden for light theme, cool blue for dark
       vec3 lightColor = mix(
-        vec3(0.93, 0.88, 0.78),  // warm base
-        vec3(1.0, 0.96, 0.85),   // bright caustic highlight
+        vec3(0.93, 0.88, 0.78),
+        vec3(1.0, 0.96, 0.85),
         caustic
       );
 
       vec3 darkColor = mix(
-        vec3(0.08, 0.09, 0.12),  // dark base
-        vec3(0.25, 0.45, 0.65),  // blue caustic highlight
+        vec3(0.08, 0.09, 0.12),
+        vec3(0.25, 0.45, 0.65),
         caustic
       );
 
       vec3 color = mix(lightColor, darkColor, u_dark);
 
-      // Subtle vignette
+      // vignette
       float vig = 1.0 - length((uv - 0.5) * 1.2);
       vig = smoothstep(0.0, 0.7, vig);
       color *= mix(0.7, 1.0, vig);
@@ -162,7 +159,7 @@
   }
   gl.useProgram(program);
 
-  // Full-screen quad
+  // full-screen quad
   const buf = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buf);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
@@ -198,8 +195,6 @@
 
   function render() {
     const t = (performance.now() - startTime) / 1000.0;
-
-    // Smooth mouse follow
     smoothMouse.x += (mouse.x - smoothMouse.x) * 0.03;
     smoothMouse.y += (mouse.y - smoothMouse.y) * 0.03;
 
