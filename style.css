@@ -5,6 +5,7 @@
   --link: #4a6da7;
   --link-hover: #2c4a7a;
   --border: #d4d0c8;
+  --accent: #c4785b;
 }
 
 [data-theme="dark"] {
@@ -14,6 +15,7 @@
   --link: #7fa8d4;
   --link-hover: #a8c5e8;
   --border: #333;
+  --accent: #d4956e;
 }
 
 * {
