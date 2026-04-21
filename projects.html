@@ -8,7 +8,7 @@
 </head>
 <body>
 <canvas id="caustics"></canvas>
-<div class="container">
+<div class="container projects-container">
     <header>
         <h1>Projects</h1>
         <div class="controls">
@@ -23,16 +23,80 @@
             </a>
         </div>
     </header>
+
     <nav class="breadcrumb">
         <a href="index.html">Home</a>
-        <span class="separator">›</span>
+        <span class="separator">&#8250;</span>
         <span>Projects</span>
     </nav>
 
+    <h2 class="heading">Selected <em>work</em></h2>
+
+    <div class="filter-tabs">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="web">Web</button>
+        <button class="filter-btn" data-filter="tools">Tools</button>
+        <button class="filter-btn" data-filter="ai">AI</button>
+        <button class="filter-btn" data-filter="open-source">Open Source</button>
+    </div>
+
+    <div class="bento-grid">
+
+        <div class="project-card large" data-category="web" data-index="0">
+            <span class="card-number">01</span>
+            <div class="card-content">
+                <span class="card-meta">WEB &middot; 2026</span>
+                <h3 class="card-title">Personal Portfolio</h3>
+                <p class="card-desc">Minimalist personal site with WebGL caustics, Hardcover API integration, and live forex statistics from cTrader.</p>
+                <div class="card-tags">
+                    <span class="tag">HTML</span>
+                    <span class="tag">CSS</span>
+                    <span class="tag">WebGL</span>
+                    <span class="tag">Vercel</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card" data-category="ai" data-index="1">
+            <span class="card-number">02</span>
+            <div class="card-content">
+                <span class="card-meta">AI &middot; 2026</span>
+                <h3 class="card-title">Sentiment Analyzer</h3>
+                <p class="card-desc">NLP pipeline for financial news sentiment scoring with real-time market correlation.</p>
+                <div class="card-tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">PyTorch</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card" data-category="tools" data-index="2">
+            <span class="card-number">03</span>
+            <div class="card-content">
+                <span class="card-meta">TOOLS &middot; 2026</span>
+                <h3 class="card-title">Trade Journal CLI</h3>
+                <p class="card-desc">Command-line tool that parses cTrader CSV exports and generates performance reports.</p>
+                <div class="card-tags">
+                    <span class="tag">Node.js</span>
+                    <span class="tag">CLI</span>
+                </div>
+            </div>
+        </div>
 
 
+<div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+        <button class="modal-close" id="modal-close">&times;</button>
+        <span class="modal-meta" id="modal-meta"></span>
+        <h2 class="modal-title" id="modal-title"></h2>
+        <p class="modal-desc" id="modal-desc"></p>
+        <div class="modal-tags" id="modal-tags"></div>
+        <div class="modal-links" id="modal-links"></div>
+    </div>
 </div>
+
 <script src="Scripting/caustics.js"></script>
 <script src="Scripting/script.js"></script>
+<script src="Scripting/projects.js"></script>
 </body>
 </html>
