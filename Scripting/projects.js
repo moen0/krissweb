@@ -1,17 +1,17 @@
 var projectData = [
     {
-        meta: 'WEB \u00b7 2026',
-        title: 'Personal Portfolio',
-        desc: 'Minimalist personal site with a WebGL caustics refraction shader as the background. Integrates the Hardcover GraphQL API via a Vercel serverless function to show what I\'m currently reading. Live forex statistics are parsed from cTrader CSV exports using PapaParse. Built from scratch with no frameworks.',
-        tags: ['HTML', 'CSS', 'WebGL', 'GLSL', 'Vercel', 'PapaParse'],
+        meta: 'Rust \u00b7 2026',
+        title: 'Specula',
+        desc: 'A local-first personal finance OS in Rust (PSD2 banking, encrypted store, custom charts), fit for a Local LLM to process financial data.',
+        tags: ['Rust', 'SQL', 'Local LLM'],
         links: [
             { label: 'View Project \u2192', url: 'https://kriss.my', type: 'primary' },
             { label: 'Source Code', url: 'https://github.com/moen0', type: 'secondary' }
         ]
     },
     {
-        meta: 'AI \u00b7 2026',
-        title: 'Sentiment Analyzer',
+        meta: 'TOOLS \u00b7 2026',
+        title: 'NoteQuant Backtester',
         desc: 'An NLP pipeline that scores financial news articles for sentiment and correlates the output with short-term price movements on major forex pairs. Uses a fine-tuned transformer model for domain-specific language. Designed to feed signals into discretionary trading decisions.',
         tags: ['Python', 'PyTorch', 'Transformers', 'Pandas'],
         links: [

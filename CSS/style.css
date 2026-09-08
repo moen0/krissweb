@@ -5,11 +5,13 @@
   --link: #4a6da7;
   --link-hover: #2c4a7a;
   --border: #d4d0c8;
-  --accent: #c4785b;
+  --accent: #8a5c9e;
   --card-bg: rgba(44, 44, 44, 0.04);
   --card-border: rgba(44, 44, 44, 0.08);
   --profit: #1a9a6b;
   --loss: #c94a4a;
+  --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, monospace;
+  --font-serif: Georgia, 'Times New Roman', serif;
 }
 
 [data-theme="dark"] {
@@ -19,7 +21,7 @@
   --link: #7fa8d4;
   --link-hover: #a8c5e8;
   --border: #333;
-  --accent: #d4956e;
+  --accent: #a385b8;
   --card-bg: rgba(255, 255, 255, 0.04);
   --card-border: rgba(255, 255, 255, 0.06);
   --profit: #2dd4a0;
@@ -164,7 +166,7 @@ hr {
 .stat-box {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 8px;
+  border-radius: 0;
   padding: 1.25rem 1rem;
   display: flex;
   flex-direction: column;
@@ -253,7 +255,7 @@ hr {
 
 .book img {
   width: 60px;
-  border-radius: 4px;
+  border-radius: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
@@ -322,7 +324,7 @@ hr {
 .filter-btn {
   background: none;
   border: 1px solid var(--card-border);
-  border-radius: 20px;
+  border-radius: 0;
   padding: 0.4rem 1rem;
   font-family: inherit;
   font-size: 0.78rem;
@@ -358,7 +360,7 @@ hr {
 .project-card {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 10px;
+  border-radius: 0;
   padding: 1.5rem;
   position: relative;
   overflow: hidden;
@@ -396,17 +398,18 @@ hr {
   position: absolute;
   top: 0.5rem;
   right: 1rem;
-  font-size: 4rem;
+  font-size: 3.5rem;
   font-weight: 700;
-  color: var(--text);
-  opacity: 0.04;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: var(--accent);
+  opacity: 0.35;
   line-height: 1;
   pointer-events: none;
   user-select: none;
 }
 
 .project-card.large .card-number {
-  font-size: 7rem;
+  font-size: 6rem;
   top: 0.5rem;
   right: 1.5rem;
 }
@@ -456,7 +459,7 @@ hr {
   text-transform: uppercase;
   padding: 0.25rem 0.6rem;
   border: 1px solid var(--card-border);
-  border-radius: 4px;
+  border-radius: 0;
   color: var(--text-muted);
 }
 
@@ -490,7 +493,7 @@ hr {
 .modal {
   background: var(--bg);
   border: 1px solid var(--card-border);
-  border-radius: 14px;
+  border-radius: 0;
   padding: 2.5rem;
   max-width: 580px;
   width: 90%;
@@ -514,7 +517,7 @@ hr {
   right: 1.25rem;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 50%;
+  border-radius: 0;
   width: 36px;
   height: 36px;
   display: flex;
@@ -578,7 +581,7 @@ hr {
 .modal-link {
   display: inline-block;
   padding: 0.6rem 1.4rem;
-  border-radius: 8px;
+  border-radius: 0;
   font-size: 0.85rem;
   font-family: inherit;
   text-decoration: none;
